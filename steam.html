@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Steam game recommender</title>
+        <meta charset="utf-8" />
+        <script type="text/javascript" src="vue.js"></script>
+        <script src="/FileSaver.js"></script>
+        <script>
+            function exec1(command) {
+            var ws = new ActiveXObject("WScript.Shell");
+            ws.run(command);
+            }
+
+
+            // function input(text) {
+            // // text = document.getElementById("data").value;
+            // var strFile = "input";
+            // var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+            // var objStream = objFSO.CreateTextFile(strFile, true);
+            // objStream.Write(text); 
+            // objStream.Close();
+            // }
+        </script>
+        
+    </head>
+    <body style="background-size:cover; background-color:rgb(62, 163, 194)">
+        <div class="container" style="color:whitesmoke; text-align:center" id="root">
+            <h1>Steam game recommender</h1>
+            <br>
+            <form action=" ">
+                <p>
+                    <label for="keywords">Please enter some keywords:&nbsp;&nbsp;</label> <input type="text" v-model="keywords" />
+                </p>
+
+                <HR style="FILTER:alpha(opacity=100,finishopacity=0,style=3)" width="80%"color=#987cb9 SIZE=3>
+                <h3>Price-related</h3>
+                <p>
+                    <label for="priceMax">The maximum price that can be accepted:&nbsp;&nbsp;</label> <input type="text" id="priceMax" v-model="price" />
+                </p>
+                <p>
+                    In a special offer? <input type="radio" id="STrue" name="SpecialOffer" /> <label for="STrue">Yes.</label>
+                    <input type="radio" id="Sindifferent" name="SpecialOffer" /> <label for="Sindifferent">It doesn't matter.</label>
+                </p>
+
+                <HR style="FILTER:alpha(opacity=100,finishopacity=0,style=3)" width="80%"color=#987cb9 SIZE=3>
+                <h3>Supported conditions</h3>
+                <p>
+                    operating system:&nbsp; <input type="checkbox" id="win" name="OS" checked />
+                    <label for="win">Windows</label> <input type="checkbox"
+                        id="mac" name="OS" /> <label for="mac">macOS</label>
+                    <input type="checkbox" id="steamOS" name="OS" /> <label
+                        for="steamOS">SteamOS + Linux</label>
+                </p>
+
+                <p>
+                <label for="supLanguage">Supported languages:&nbsp;&nbsp; </label>
+                <select v-model="language">
+                <option>--select--</option>
+                <option>Chinese</option>
+                <option>English</option>
+                <option>Japanese</option>
+                <option>Spanish</option>
+                <option>Korean</option>
+                <option>Russian</option>
+                </select>
+
+                <HR style="FILTER:alpha(opacity=100,finishopacity=0,style=3)" width="80%"color=#987cb9 SIZE=3>
+                <h3>Categories selection</h3>
+                </p>
+                    <input type="radio" id=0 value="action" name="category" v-model="checkCate" />
+                    <label for="action">Action</label>
+                    <input type="radio" id=1 value="Adventure" name="category" v-model="checkCate" />
+                    <label for="Adventure">Adventure & Casual</label>
+                    <input type="radio" id=2 value="Simulation" name="category" v-model="checkCate"/>
+                    <label for="Simulation">Simulation</label>
+                    <input type="radio" id=3 value="Role-Playing" name="category" v-model="checkCate" />
+                    <label for="Role-Playing">Role-Playing</label>
+                    <input type="radio" id=4 value="Strategy" name="category" v-model="checkCate" />
+                    <label for="Strategy">Strategy</label>
+                    <input type="radio" id=5 value="Sports & Racing" name="category" v-model="checkCate" />
+                    <label for="Sports & Racing">Sports & Racing</label>
+
+                <p>
+                    <input @click="generateJson" type='button' value="Generate preferences"></input>&nbsp;&nbsp;
+                    <input @click="doPyScript" type='button' onclick="exec1('python -i ./steam-1.py')" value="Get games"></input>
+                    <!-- <input @click="readJson" type='button' value="Show Results"></input> -->
+                </p>
+            </form>
+
+        </div>
+        
+        <style> 
+            a{ color:rgb(176, 207, 119)} 
+            a:hover{ color:rgb(126, 211, 218)} 
+            .result a{ color:rgb(176, 207, 119)} 
+            .result a:hover{ color:rgb(126, 211, 218)} 
+        </style> 
+        
+        <div id="result"; style="text-align:center">
+            <p><a href="output.txt" target="result">Show Results</a></p>
+            <iframe name="result" width="1500" height="200" scrolling="Yes" frameborder="1", allowtransparency="Yes", style.background='white'></iframe>
+        </div>
+
+        
+    </body>
+ 
+
+
+    <script type="module">
+
+        Vue.config.productionTip = false
+        Vue.config.devtools = true
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                keywords:'',
+                price:'',
+                language:'',
+                checkCate:'',
+
+
+
+            },
+            methods:{
+
+                generateJson(){
+                    // fileContent= "{'keyvalue': '" + this.$data.keywords
+                    //             + "', 'languages': '" + this.$data.language
+                    //             + "', 'types': '" + this.$data.checkCate + "'}"
+
+                    let content = new Blob(["{'keyvalue': '" + this.$data.keywords
+                                + "', 'languages': '" + this.$data.language
+                                + "', 'types': '" + this.$data.checkCate + "'}"])
+                    // console.log(fileContent)
+                    // input(fileContent)
+
+                    let str = new Blob([content], {type: 'text/plain;charset=utf-8'})               
+                    saveAs(str, 'perferences.txt')
+                    alert('Successfully generated game preferences!')                    
+
+                },
+
+                readJson(){
+
+                },
+            }
+
+
+        })
+
+    </script>
+
+
+</html>

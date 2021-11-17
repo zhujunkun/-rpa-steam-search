@@ -8,11 +8,12 @@ import numpy as np
 import sys
 import codecs
 import jieba.posseg as pseg
-try:
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
-except:
-    pass
+
+# try:
+#     reload(sys)
+#     sys.setdefaultencoding('utf-8')
+# except:
+#     pass
     
 sentence_delimiters = ['?', '!', ';', '？', '！', '。', '；', '……', '…', '\n']
 allow_speech_tags = ['an', 'i', 'j', 'l', 'n', 'nr', 'nrfg', 'ns', 'nt', 'nz', 't', 'v', 'vd', 'vn', 'eng']
@@ -37,24 +38,24 @@ if not PY2:
     def is_text(v):
         return isinstance(v, text_type)
 
-else:
-    # Python 2.x
-    text_type    = unicode
-    string_types = (str, unicode)
-    xrange       = xrange
-
-    def as_text(v):
-        if v is None:
-            return None
-        elif isinstance(v, unicode):
-            return v
-        elif isinstance(v, str):
-            return v.decode('utf-8', errors='ignore')
-        else:
-            raise ValueError('Invalid type %r' % type(v))
-
-    def is_text(v):
-        return isinstance(v, text_type)
+# else:
+#     # Python 2.x
+#     text_type    = unicode
+#     string_types = (str, unicode)
+#     xrange       = xrange
+#
+#     def as_text(v):
+#         if v is None:
+#             return None
+#         elif isinstance(v, unicode):
+#             return v
+#         elif isinstance(v, str):
+#             return v.decode('utf-8', errors='ignore')
+#         else:
+#             raise ValueError('Invalid type %r' % type(v))
+#
+#     def is_text(v):
+#         return isinstance(v, text_type)
 
 __DEBUG = None
 
@@ -539,24 +540,24 @@ if not PY2:
     def is_text(v):
         return isinstance(v, text_type)
 
-else:
-    # Python 2.x
-    text_type    = unicode
-    string_types = (str, unicode)
-    xrange       = xrange
-
-    def as_text(v):
-        if v is None:
-            return None
-        elif isinstance(v, unicode):
-            return v
-        elif isinstance(v, str):
-            return v.decode('utf-8', errors='ignore')
-        else:
-            raise ValueError('Invalid type %r' % type(v))
-
-    def is_text(v):
-        return isinstance(v, text_type)
+# else:
+#     # Python 2.x
+#     text_type    = unicode
+#     string_types = (str, unicode)
+#     xrange       = xrange
+#
+#     def as_text(v):
+#         if v is None:
+#             return None
+#         elif isinstance(v, unicode):
+#             return v
+#         elif isinstance(v, str):
+#             return v.decode('utf-8', errors='ignore')
+#         else:
+#             raise ValueError('Invalid type %r' % type(v))
+#
+#     def is_text(v):
+#         return isinstance(v, text_type)
 
 __DEBUG = None
 
